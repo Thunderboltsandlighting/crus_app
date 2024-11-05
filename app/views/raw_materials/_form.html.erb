@@ -1,0 +1,72 @@
+<%= form_with(model: raw_material, local: true) do |form| %>
+  <% if raw_material.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(raw_material.errors.count, "error") %> prohibited this raw_material from being saved:</h2>
+
+      <ul>
+        <% raw_material.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.label :sku %>
+    <%= form.text_field :sku %>
+  </div>
+
+  <div class="field">
+    <%= form.label :product_description %>
+    <%= form.text_field :product_description %>
+  </div>
+
+  <div class="field">
+    <%= form.label :category %>
+    <%= form.text_field :category %>
+  </div>
+
+  <div class="field">
+    <%= form.label :uom %>
+    <%= form.select :uom, options_for_select(['KG', 'Grams', 'mL', 'Gallons', 'Pounds', 'Each']) %>
+  </div>
+
+  <div class="field">
+    <%= form.label :re_order_level %>
+    <%= form.number_field :re_order_level %>
+  </div>
+
+  <div class="field">
+    <%= form.label :mpq %>
+    <%= form.number_field :mpq, step: :any %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost_per_mpq %>
+    <%= form.number_field :cost_per_mpq, step: :any %>
+  </div>
+
+  <div class="field">
+    <%= form.label :cost_per_uom %>
+    <%= form.number_field :cost_per_uom, step: :any, readonly: true %>
+  </div>
+
+  <div class="field">
+    <%= form.label :quantity %>
+    <%= form.number_field :quantity, step: :any %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vendor %>
+    <%= form.text_field :vendor %>
+  </div>
+
+  <div class="field">
+    <%= form.label :vendor_contact %>
+    <%= form.text_field :vendor_contact %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,95 @@
+<p>
+  <strong>SKU Number:</strong>
+  <%= @raw_material.sku %>
+</p>
+
+<p>
+  <strong>Product Description:</strong>
+  <%= @raw_material.product_description %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @raw_material.category %>
+</p>
+
+<p>
+  <strong>U.O.M:</strong>
+  <%= @raw_material.uom %>
+</p>
+
+<p>
+  <strong>Re order level:</strong>
+  <%= @raw_material.re_order_level %>
+</p>
+
+<p>
+  <strong>M.P.Q:</strong>
+  <%= @raw_material.mpq %>
+</p>
+
+<p>
+  <strong>Cost per M.P.Q:</strong>
+  <%= number_to_currency(@raw_material.cost_per_mpq) %>
+</p>
+
+<p>
+  <strong>Cost per U.O.M:</strong>
+  <%= number_to_currency(@raw_material.cost_per_uom) %>
+</p>
+
+<p>
+  <strong>Quantity:</strong>
+  <%= @raw_material.quantity %>
+</p>
+
+<p>
+  <strong>Vendor:</strong>
+  <%= @raw_material.vendor %>
+</p>
+
+<p>
+  <strong>Vendor contact:</strong>
+  <%= @raw_material.vendor_contact %>
+</p>
+
+<%= link_to 'Edit', edit_raw_material_path(@raw_material) %> |
+<%= link_to 'Back', raw_materials_path %>
+
+<h2>Increase Stock</h2>
+<%= form_with url: increase_stock_raw_material_path(@raw_material), method: :patch do %>
+  <div class="field">
+    <%= label_tag :quantity, "Quantity" %>
+    <%= number_field_tag :quantity, nil, step: :any %>
+  </div>
+  <div class="field">
+    <%= label_tag :received_date, "Received Date" %>
+    <%= date_field_tag :received_date %>
+  </div>
+  <div class="field">
+    <%= label_tag :purchase_order, "Purchase Order" %>
+    <%= text_field_tag :purchase_order %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Increase Stock" %>
+  </div>
+<% end %>
+
+<h2>Decrease Stock</h2>
+<%= form_with url: decrease_stock_raw_material_path(@raw_material), method: :patch do %>
+  <div class="field">
+    <%= label_tag :quantity, "Quantity" %>
+    <%= number_field_tag :quantity, nil, step: :any %>
+  </div>
+  <div class="field">
+    <%= label_tag :deduction_date, "Deduction Date" %>
+    <%= date_field_tag :deduction_date %>
+  </div>
+  <div class="field">
+    <%= label_tag :reason, "Reason" %>
+    <%= text_field_tag :reason %>
+  </div>
+  <div class="actions">
+    <%= submit_tag "Decrease Stock" %>
+  </div>
+<% end %>

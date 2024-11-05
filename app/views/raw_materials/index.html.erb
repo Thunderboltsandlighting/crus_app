@@ -1,0 +1,50 @@
+<h1>Brewery Ingredients</h1>
+
+<%= link_to 'New Raw Material', new_raw_material_path %>
+
+<table>
+  <thead>
+    <tr>
+      <th>SKU</th>
+      <th>Product Description</th>
+      <th>Category</th>
+      <th>U.O.M</th>
+      <th>Re-Order Level</th>
+      <th>M.P.Q</th>
+      <th>Cost Per M.P.Q</th>
+      <th>Cost Per U.O.M</th>
+      <th>Quantity</th>
+      <th>Vendor</th>
+      <th>Vendor Contact</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @raw_materials.each do |raw_material| %>
+      <% row_class = if raw_material.quantity && raw_material.mpq && raw_material.quantity >= raw_material.mpq
+                       'sufficient'
+                     elsif raw_material.quantity && raw_material.mpq && raw_material.quantity >= (raw_material.mpq * 0.5)
+                       'getting-low'
+                     else
+                       'out-of-stock'
+                     end %>
+      <tr class="<%= row_class %>">
+        <td><%= raw_material.sku %></td>
+        <td><%= raw_material.product_description %></td>
+        <td><%= raw_material.category %></td>
+        <td><%= raw_material.uom %></td>
+        <td><%= raw_material.re_order_level %></td>
+        <td><%= raw_material.mpq %></td>
+        <td><%= number_to_currency(raw_material.cost_per_mpq) %></td>
+        <td><%= number_to_currency(raw_material.cost_per_uom) %></td>
+        <td><%= raw_material.quantity %></td>
+        <td><%= raw_material.vendor %></td>
+        <td><%= raw_material.vendor_contact %></td>
+        <td><%= link_to 'Show', raw_material %></td>
+        <td><%= link_to 'Edit', edit_raw_material_path(raw_material) %></td>
+        <td><%= link_to 'Destroy', raw_material, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

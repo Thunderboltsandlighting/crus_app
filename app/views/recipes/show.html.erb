@@ -1,0 +1,23 @@
+<p style="color: green"><%= notice %></p>
+
+<p>
+  <strong>ABV:</strong>
+  <%= number_to_percentage(@recipe.abv, precision: 1) %>
+</p>
+
+<p>
+  <strong>IBU:</strong>
+  <%= @recipe.ibu %>
+</p>
+
+<p>
+  <strong>SRM:</strong>
+  <%= @recipe.srm %>
+</p>
+
+<div>
+  <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
+  <%= link_to "Back to recipes", recipes_path %>
+
+  <%= button_to "Destroy this recipe", @recipe, method: :delete, data: { confirm: 'Are you sure?' } %>
+</div>
