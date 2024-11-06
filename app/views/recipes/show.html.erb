@@ -1,23 +1,36 @@
-<p style="color: green"><%= notice %></p>
+<h1><%= @recipe.name %></h1>
+<p><strong>ABV:</strong> <%= @recipe.abv %></p>
+<p><strong>IBU:</strong> <%= @recipe.ibu %></p>
+<p><strong>SRM:</strong> <%= @recipe.srm %></p>
+<p><strong>Description:</strong> <%= @recipe.description %></p>
 
-<p>
-  <strong>ABV:</strong>
-  <%= number_to_percentage(@recipe.abv, precision: 1) %>
-</p>
+<h3>Grains</h3>
+<ul>
+  <% @recipe.grains.each do |grain| %>
+    <li><%= grain.name %> - <%= grain.amount %> <%= grain.uom %> - Total Cost: <%= number_to_currency(grain.total_cost) %></li>
+  <% end %>
+</ul>
 
-<p>
-  <strong>IBU:</strong>
-  <%= @recipe.ibu %>
-</p>
+<h3>Hops</h3>
+<ul>
+  <% @recipe.hops.each do |hop| %>
+    <li><%= hop.name %> - <%= hop.amount %> <%= hop.uom %> - Time: <%= hop.time %> - IBU: <%= hop.ibu %> - Type: <%= hop.hop_type %> - Total Cost: <%= number_to_currency(hop.total_cost) %></li>
+  <% end %>
+</ul>
 
-<p>
-  <strong>SRM:</strong>
-  <%= @recipe.srm %>
-</p>
+<h3>Yeasts</h3>
+<ul>
+  <% @recipe.yeasts.each do |yeast| %>
+    <li><%= yeast.name %> - <%= yeast.amount %> <%= yeast.uom %> - Total Cost: <%= number_to_currency(yeast.total_cost) %></li>
+  <% end %>
+</ul>
 
-<div>
-  <%= link_to "Edit this recipe", edit_recipe_path(@recipe) %> |
-  <%= link_to "Back to recipes", recipes_path %>
+<h3>Misc</h3>
+<ul>
+  <% @recipe.miscs.each do |misc| %>
+    <li><%= misc.name %> - <%= misc.amount %> <%= misc.uom %> - Total Cost: <%= number_to_currency(misc.total_cost) %></li>
+  <% end %>
+</ul>
 
-  <%= button_to "Destroy this recipe", @recipe, method: :delete, data: { confirm: 'Are you sure?' } %>
-</div>
+<%= link_to 'Edit', edit_recipe_path(@recipe) %> |
+<%= link_to 'Back', recipes_path %>

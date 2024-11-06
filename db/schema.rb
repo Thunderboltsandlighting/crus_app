@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_11_05_010955) do
+ActiveRecord::Schema[7.2].define(version: 2024_11_05_225046) do
   create_table "beers", force: :cascade do |t|
     t.string "recipe"
     t.datetime "created_at", null: false
@@ -24,6 +24,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_010955) do
     t.integer "recipe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uom"
+    t.decimal "total_cost"
     t.index ["recipe_id"], name: "index_brewing_salts_on_recipe_id"
   end
 
@@ -33,6 +35,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_010955) do
     t.integer "recipe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uom"
+    t.decimal "total_cost"
     t.index ["recipe_id"], name: "index_grains_on_recipe_id"
   end
 
@@ -41,11 +45,24 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_010955) do
     t.decimal "amount"
     t.integer "time"
     t.decimal "ibu"
-    t.string "type"
+    t.string "hop_type"
     t.integer "recipe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uom"
+    t.decimal "total_cost"
     t.index ["recipe_id"], name: "index_hops_on_recipe_id"
+  end
+
+  create_table "miscs", force: :cascade do |t|
+    t.string "name"
+    t.decimal "amount"
+    t.string "uom"
+    t.decimal "total_cost"
+    t.integer "recipe_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["recipe_id"], name: "index_miscs_on_recipe_id"
   end
 
   create_table "raw_materials", force: :cascade do |t|
@@ -75,6 +92,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_010955) do
     t.decimal "abv"
     t.decimal "ibu"
     t.decimal "srm"
+    t.text "description"
+    t.string "style"
   end
 
   create_table "yeasts", force: :cascade do |t|
@@ -83,11 +102,14 @@ ActiveRecord::Schema[7.2].define(version: 2024_11_05_010955) do
     t.integer "recipe_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "uom"
+    t.decimal "total_cost"
     t.index ["recipe_id"], name: "index_yeasts_on_recipe_id"
   end
 
   add_foreign_key "brewing_salts", "recipes"
   add_foreign_key "grains", "recipes"
   add_foreign_key "hops", "recipes"
+  add_foreign_key "miscs", "recipes"
   add_foreign_key "yeasts", "recipes"
 end

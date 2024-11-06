@@ -1,11 +1,33 @@
 <h1>Brand Recipes</h1>
 
-<%= link_to 'New Recipe', new_recipe_path %>
+<%= link_to 'New Recipe', new_recipe_path, class: 'btn btn-primary mb-3' %>
 
-<% @recipes.each do |recipe| %>
-  <div id="<%= dom_id(recipe) %>">
-    <h2><%= link_to recipe.name, recipe %></h2>
-    <%= link_to 'Edit', edit_recipe_path(recipe) %> |
-    <%= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' } %>
-  </div>
-<% end %>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Style</th>
+      <th>ABV</th>
+      <th>SRM</th>
+      <th>IBU</th>
+      <th>Description</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recipes.each do |recipe| %>
+      <tr id="<%= dom_id(recipe) %>">
+        <td><%= link_to recipe.name, recipe %></td>
+        <td><%= recipe.style %></td>
+        <td><%= recipe.abv %></td>
+        <td><%= recipe.srm %></td>
+        <td><%= recipe.ibu %></td>
+        <td><%= recipe.description %></td>
+        <td>
+          <%= link_to 'Edit', edit_recipe_path(recipe), class: 'btn btn-warning btn-sm' %> |
+          <%= link_to 'Destroy', recipe, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger btn-sm' %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

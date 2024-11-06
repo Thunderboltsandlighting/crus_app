@@ -1,7 +1,7 @@
-<%= form_with(model: @recipe) do |form| %>
+<%= form_with(model: @recipe, local: true, class: "needs-validation") do |form| %>
   <% if @recipe.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+    <div class="alert alert-danger">
+      <h4 class="alert-heading"><%= pluralize(@recipe.errors.count, "error") %> prohibited this recipe from being saved:</h4>
       <ul>
         <% @recipe.errors.full_messages.each do |message| %>
           <li><%= message %></li>
@@ -10,139 +10,177 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
+  <div class="mb-3">
+    <%= form.label :name, class: "form-label" %>
+    <%= form.text_field :name, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :abv %>
-    <%= form.number_field :abv, step: :any %>
+  <div class="mb-3">
+    <%= form.label :style, class: "form-label" %>
+    <%= form.select :style, options_for_select(@styles.map { |style| [style['name'], style['name']] }), {}, class: "form-select" %>
   </div>
 
-  <div class="field">
-    <%= form.label :ibu %>
-    <%= form.number_field :ibu, step: :any %>
+  <div class="mb-3">
+    <%= form.label :abv, class: "form-label" %>
+    <%= form.number_field :abv, step: :any, class: "form-control" %>
   </div>
 
-  <div class="field">
-    <%= form.label :srm %>
-    <%= form.number_field :srm, step: :any %>
+  <div class="mb-3">
+    <%= form.label :ibu, class: "form-label" %>
+    <%= form.number_field :ibu, step: :any, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :srm, class: "form-label" %>
+    <%= form.number_field :srm, step: :any, class: "form-control" %>
+  </div>
+
+  <div class="mb-3">
+    <%= form.label :description, class: "form-label" %>
+    <%= form.text_area :description, class: "form-control" %>
   </div>
 
   <h3>Grains</h3>
   <div id="grains">
     <%= form.fields_for :grains do |grain_form| %>
-      <div class="nested-fields">
-        <%= grain_form.label :name %>
-        <%= grain_form.text_field :name %>
-        <%= grain_form.label :amount %>
-        <%= grain_form.number_field :amount, step: :any %>
-        <%= link_to 'Remove', '#', class: 'remove_fields' %>
+      <div class="nested-fields mb-3">
+        <%= grain_form.label :name, class: "form-label" %>
+        <%= grain_form.text_field :name, class: "form-control grain-autocomplete", data: { inventory: @inventory_grains.to_json } %>
+        <%= grain_form.label :amount, class: "form-label" %>
+        <%= grain_form.number_field :amount, step: :any, class: "form-control amount-input" %>
+        <%= grain_form.label :uom, class: "form-label" %>
+        <%= grain_form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+        <%= grain_form.label :total_cost, class: "form-label" %>
+        <%= grain_form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+        <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
       </div>
     <% end %>
   </div>
-  <%= link_to 'Add Grain', '#', id: 'add_grain' %>
+  <%= link_to 'Add Grain', '#', id: 'add_grain', class: 'btn btn-primary' %>
 
   <h3>Hops</h3>
   <div id="hops">
     <%= form.fields_for :hops do |hop_form| %>
-      <div class="nested-fields">
-        <%= hop_form.label :name %>
-        <%= hop_form.text_field :name %>
-        <%= hop_form.label :amount %>
-        <%= hop_form.number_field :amount, step: :any %>
-        <%= hop_form.label :time %>
-        <%= hop_form.number_field :time %>
-        <%= hop_form.label :ibu %>
-        <%= hop_form.number_field :ibu, step: :any %>
-        <%= hop_form.label :type %>
-        <%= hop_form.text_field :type %>
-        <%= link_to 'Remove', '#', class: 'remove_fields' %>
+      <div class="nested-fields mb-3">
+        <%= hop_form.label :name, class: "form-label" %>
+        <%= hop_form.text_field :name, class: "form-control hop-autocomplete", data: { inventory: @inventory_hops.to_json } %>
+        <%= hop_form.label :amount, class: "form-label" %>
+        <%= hop_form.number_field :amount, step: :any, class: "form-control amount-input" %>
+        <%= hop_form.label :uom, class: "form-label" %>
+        <%= hop_form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+        <%= hop_form.label :time, class: "form-label" %>
+        <%= hop_form.number_field :time, class: "form-control" %>
+        <%= hop_form.label :ibu, class: "form-label" %>
+        <%= hop_form.number_field :ibu, step: :any, class: "form-control" %>
+        <%= hop_form.label :hop_type, class: "form-label" %>
+        <%= hop_form.text_field :hop_type, class: "form-control" %>
+        <%= hop_form.label :total_cost, class: "form-label" %>
+        <%= hop_form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+        <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
       </div>
     <% end %>
   </div>
-  <%= link_to 'Add Hop', '#', id: 'add_hop' %>
+  <%= link_to 'Add Hop', '#', id: 'add_hop', class: 'btn btn-primary' %>
 
   <h3>Yeasts</h3>
   <div id="yeasts">
     <%= form.fields_for :yeasts do |yeast_form| %>
-      <div class="nested-fields">
-        <%= yeast_form.label :name %>
-        <%= yeast_form.text_field :name %>
-        <%= yeast_form.label :amount %>
-        <%= yeast_form.number_field :amount, step: :any %>
-        <%= link_to 'Remove', '#', class: 'remove_fields' %>
+      <div class="nested-fields mb-3">
+        <%= yeast_form.label :name, class: "form-label" %>
+        <%= yeast_form.text_field :name, class: "form-control yeast-autocomplete", data: { inventory: @inventory_yeasts.to_json } %>
+        <%= yeast_form.label :amount, class: "form-label" %>
+        <%= yeast_form.number_field :amount, step: :any, class: "form-control amount-input" %>
+        <%= yeast_form.label :uom, class: "form-label" %>
+        <%= yeast_form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+        <%= yeast_form.label :total_cost, class: "form-label" %>
+        <%= yeast_form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+        <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
       </div>
     <% end %>
   </div>
-  <%= link_to 'Add Yeast', '#', id: 'add_yeast' %>
+  <%= link_to 'Add Yeast', '#', id: 'add_yeast', class: 'btn btn-primary' %>
 
-  <h3>Brewing Salts</h3>
-  <div id="brewing_salts">
-    <%= form.fields_for :brewing_salts do |salt_form| %>
-      <div class="nested-fields">
-        <%= salt_form.label :name %>
-        <%= salt_form.text_field :name %>
-        <%= salt_form.label :amount %>
-        <%= salt_form.number_field :amount, step: :any %>
-        <%= salt_form.label :type %>
-        <%= salt_form.text_field :type %>
-        <%= link_to 'Remove', '#', class: 'remove_fields' %>
+  <h3>Misc</h3>
+  <div id="misc">
+    <%= form.fields_for :miscs do |misc_form| %>
+      <div class="nested-fields mb-3">
+        <%= misc_form.label :name, class: "form-label" %>
+        <%= misc_form.text_field :name, class: "form-control misc-autocomplete", data: { inventory: @inventory_misc.to_json } %>
+        <%= misc_form.label :amount, class: "form-label" %>
+        <%= misc_form.number_field :amount, step: :any, class: "form-control amount-input" %>
+        <%= misc_form.label :uom, class: "form-label" %>
+        <%= misc_form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+        <%= misc_form.label :total_cost, class: "form-label" %>
+        <%= misc_form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+        <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
       </div>
     <% end %>
   </div>
-  <%= link_to 'Add Brewing Salt', '#', id: 'add_brewing_salt' %>
+  <%= link_to 'Add Misc', '#', id: 'add_misc', class: 'btn btn-primary' %>
 
   <div class="actions">
-    <%= form.submit %>
+    <%= form.submit class: "btn btn-success" %>
+  </div>
+
+  <div id="grains_template" style="display: none;">
+    <div class="nested-fields mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control grain-autocomplete", data: { inventory: @inventory_grains.to_json } %>
+      <%= form.label :amount, class: "form-label" %>
+      <%= form.number_field :amount, step: :any, class: "form-control amount-input" %>
+      <%= form.label :uom, class: "form-label" %>
+      <%= form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+      <%= form.label :total_cost, class: "form-label" %>
+      <%= form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+      <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
+    </div>
+  </div>
+
+  <div id="hops_template" style="display: none;">
+    <div class="nested-fields mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control hop-autocomplete", data: { inventory: @inventory_hops.to_json } %>
+      <%= form.label :amount, class: "form-label" %>
+      <%= form.number_field :amount, step: :any, class: "form-control amount-input" %>
+      <%= form.label :uom, class: "form-label" %>
+      <%= form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+      <%= form.label :time, class: "form-label" %>
+      <%= form.number_field :time, class: "form-control" %>
+      <%= form.label :ibu, class: "form-label" %>
+      <%= form.number_field :ibu, step: :any, class: "form-control" %>
+      <%= form.label :hop_type, class: "form-label" %>
+      <%= form.text_field :hop_type, class: "form-control" %>
+      <%= form.label :total_cost, class: "form-label" %>
+      <%= form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+      <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
+    </div>
+  </div>
+
+  <div id="yeasts_template" style="display: none;">
+    <div class="nested-fields mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control yeast-autocomplete", data: { inventory: @inventory_yeasts.to_json } %>
+      <%= form.label :amount, class: "form-label" %>
+      <%= form.number_field :amount, step: :any, class: "form-control amount-input" %>
+      <%= form.label :uom, class: "form-label" %>
+      <%= form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+      <%= form.label :total_cost, class: "form-label" %>
+      <%= form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+      <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
+    </div>
+  </div>
+
+  <div id="misc_template" style="display: none;">
+    <div class="nested-fields mb-3">
+      <%= form.label :name, class: "form-label" %>
+      <%= form.text_field :name, class: "form-control misc-autocomplete", data: { inventory: @inventory_misc.to_json } %>
+      <%= form.label :amount, class: "form-label" %>
+      <%= form.number_field :amount, step: :any, class: "form-control amount-input" %>
+      <%= form.label :uom, class: "form-label" %>
+      <%= form.text_field :uom, readonly: true, class: "form-control uom-input" %>
+      <%= form.label :total_cost, class: "form-label" %>
+      <%= form.number_field :total_cost, step: :any, readonly: true, class: "form-control total-cost-input" %>
+      <%= link_to 'Remove', '#', class: 'btn btn-danger remove_fields' %>
+    </div>
   </div>
 <% end %>
-
-<div id="grains_template" style="display: none;">
-  <div class="nested-fields">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-    <%= form.label :amount %>
-    <%= form.number_field :amount, step: :any %>
-    <%= link_to 'Remove', '#', class: 'remove_fields' %>
-  </div>
-</div>
-
-<div id="hops_template" style="display: none;">
-  <div class="nested-fields">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-    <%= form.label :amount %>
-    <%= form.number_field :amount, step: :any %>
-    <%= form.label :time %>
-    <%= form.number_field :time %>
-    <%= form.label :ibu %>
-    <%= form.number_field :ibu, step: :any %>
-    <%= form.label :type %>
-    <%= form.text_field :type %>
-    <%= link_to 'Remove', '#', class: 'remove_fields' %>
-  </div>
-</div>
-
-<div id="yeasts_template" style="display: none;">
-  <div class="nested-fields">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-    <%= form.label :amount %>
-    <%= form.number_field :amount, step: :any %>
-    <%= link_to 'Remove', '#', class: 'remove_fields' %>
-  </div>
-</div>
-
-<div id="brewing_salts_template" style="display: none;">
-  <div class="nested-fields">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-    <%= form.label :amount %>
-    <%= form.number_field :amount, step: :any %>
-    <%= form.label :type %>
-    <%= form.text_field :type %>
-    <%= link_to 'Remove', '#', class: 'remove_fields' %>
-  </div>
-</div>

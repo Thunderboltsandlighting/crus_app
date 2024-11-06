@@ -1,6 +1,6 @@
-class CreateGrains < ActiveRecord::Migration[7.2]
+class CreateMiscs < ActiveRecord::Migration[7.2]
   def change
-    create_table :grains do |t|
+    create_table :miscs do |t|
       t.string :name
       t.decimal :amount
       t.string :uom
