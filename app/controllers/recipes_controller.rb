@@ -4,19 +4,10 @@ class RecipesController < ApplicationController
   # GET /recipes or /recipes.json
   def index
     @recipes = Recipe.all
-
-    respond_to do |format|
-      format.html
-      format.json { render :index }
-    end
   end
 
   # GET /recipes/1 or /recipes/1.json
   def show
-    respond_to do |format|
-      format.html
-      format.json { render :show }
-    end
   end
 
   # GET /recipes/new
@@ -36,7 +27,6 @@ class RecipesController < ApplicationController
 
   # GET /recipes/1/edit
   def edit
-    @recipe = Recipe.find(params[:id])
     @styles = load_styles
     @inventory_grains = RawMaterial.where(category: 'Grain')
     @inventory_hops = RawMaterial.where(category: 'Hop')

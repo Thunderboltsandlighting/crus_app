@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   get "home/index"
+  get 'dashboard', to: 'home#dashboard'
   resources :recipes
-  resources :raw_materials do
+  resources :raw_materials
     member do
       patch :increase_stock
       patch :decrease_stock

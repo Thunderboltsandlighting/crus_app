@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Brewery Inventory System</title>
+    <title><%= content_for?(:title) ? yield(:title) : "The LagerHaus" %></title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,16 +10,30 @@
   </head>
 
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li><%= link_to 'Home', root_path %></li>
-          <li><%= link_to 'Brand Recipes', recipes_path %></li>
-          <li><%= link_to 'Brewery Ingredients', raw_materials_path %></li>
-        </ul>
-      </nav>
-    </header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">MyApp</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <%= link_to "Home", root_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Recipes", recipes_path, class: "nav-link" %>
+            </li>
+            <li class="nav-item">
+              <%= link_to "Raw Materials", raw_materials_path, class: "nav-link" %>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-    <%= yield %>
+    <div class="container mt-4">
+      <%= yield %>
+    </div>
   </body>
 </html>

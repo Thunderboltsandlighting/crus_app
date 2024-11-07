@@ -4,6 +4,5 @@ import "controllers"
 import "./packs/raw_materials";
 import "./packs/nested_form";
 import "./recipes";
-import "packs/recipes"
 import "bootstrap"
 import "../stylesheets/application"
