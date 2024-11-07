@@ -43,7 +43,7 @@ group :development, :test do
 
   # Omakase Ruby styling [https://github.com/rails/rubocop-rails-omakase/]
   gem "rubocop-rails-omakase", require: false
-  gem "bootstrap", "~> 5.1.3"
+  gem "bootstrap", "~> 5.3.3"
   gem "sassc-rails"
 end
 
